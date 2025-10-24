@@ -1,1 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=WindSong:wght@400;500&display=swap');
 @import "tailwindcss";
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=WindSong:wght@400;500&display=swap');
+
+  :root {
+    --font-reddit: "Reddit Sans", sans-serif;
+    --font-windsong: "WindSong", cursive;
+  }
+
+  body {
+    font-family: var(--font-reddit);
+  }
+
+  .font-windsong {
+    font-family: var(--font-windsong);
+  }
+}
