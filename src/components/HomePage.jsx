@@ -14,7 +14,7 @@ export default function LandingPage() {
     <div className={`${baseClasses} ${themeClasses}`}>
       <div className="mt-10 flex flex-col h-full">
         <div className="mx-30">
-          <button onClick={toggleTheme} className="border rounded-md p-1 transition-all duration-500 cursor-pointer">
+          <button onClick={toggleTheme} className="border rounded-md p-1 transition-all duration-500 cursor-pointer hover:scale-[108%]">
             {isDark ? (
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
@@ -27,13 +27,22 @@ export default function LandingPage() {
           </button>
         </div>
         <div className="mx-30 text-6xl font-semibold h-full flex items-center">
-          <h1>
+          <h1 className="">
             Hello Stranger<br />It's me{" "}
             <span className="font-windsong underline underline-offset-[8px] decoration-[#006989]">
               Julius
             </span>
             <br />
-            Welcome to White Space
+            Welcome to {" "}
+            <span className="inline-grid">
+              <span className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${isDark ? "opacity-0" : "opacity-100"}`}>
+                White Space
+              </span>
+
+              <span className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${isDark ? "opacity-100" : "opacity-0"}`}>
+                Black Space
+              </span>
+            </span>
           </h1>
         </div>
       </div>
