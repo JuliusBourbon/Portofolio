@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=WindSong:wght@400;500&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: #EAEBED;
+  --color-background-dark: #000F13;
+  --color-text: #2E3834;
+  --color-text-dark: #EAEBED;
+}
+
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&family=WindSong:wght@400;500&display=swap');
 
