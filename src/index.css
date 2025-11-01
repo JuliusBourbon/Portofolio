@@ -8,6 +8,8 @@
   --color-background-dark: #000F13;
   --color-text: #2E3834;
   --color-text-dark: #EAEBED;
+  --color-button: #2E3834;
+  --color-button-dark: #EAEBED;
 }
 
 @layer base {
