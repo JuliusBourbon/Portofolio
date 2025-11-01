@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SproutMole from "./SproutMole";
 import Wormhole from "./Wormhole";
 import Bunny from "./Bunny";
@@ -8,17 +8,39 @@ import GitBlack from "../assets/Github_black.png";
 
 export default function LandingPage() {
   const [isDark, setDark] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const toggleTheme = () => {
     setDark(!isDark);
   };
 
-  const baseClasses = "w-full flex flex-col h-screen overflow-x-hidden transition-colors duration-300 ease-in-out";
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const baseClasses = "w-full flex flex-col h-screen overflow-x-hidden transition-colors duration-500 ease-in-out";
+  
   const themeClasses = isDark ? "text-text-dark bg-background-dark" : "text-text bg-background";
 
+  const spotlightStyle = {
+    background: `radial-gradient(
+      700px circle at ${mousePosition.x}px ${mousePosition.y}px,
+      ${isDark ? "rgba(234,235,237, 0.10)" : "rgba(46, 56, 52, 0.30)"},
+      transparent 80%
+    )`
+  };
+
   return (
-    <div>
-      <div className={`${baseClasses} ${themeClasses}`}>
+    <div className={`${themeClasses} relative transition-colors duration-500 ease-in-out`}>
+      <div className="pointer-events-none fixed inset-0 z-10"style={spotlightStyle}/>
+
+      <div className={`${baseClasses} relative z-20`}>
         <div className="mt-10 flex flex-col h-full">
           <div className="mx-30 flex justify-between">
             <div>
@@ -59,7 +81,6 @@ export default function LandingPage() {
                 <span className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${isDark ? "opacity-0" : "opacity-100"}`}>
                   White Space
                 </span>
-
                 <span className={`col-start-1 row-start-1 transition-opacity duration-700 ease-in-out ${isDark ? "opacity-100" : "opacity-0"}`}>
                   Black Space
                 </span>
@@ -68,7 +89,8 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      <div className={`${baseClasses} ${themeClasses}`}>
+
+      <div className={`${baseClasses} relative z-20 scroll-smooth`}>
         <div className="mt-40 flex flex-col h-full">
           <div className="mx-30 max-w-[60%] flex flex-col gap-10">
             <h1 className="text-7xl font-semibold">I wan't to be a Full Stack Web Dev</h1>
@@ -100,7 +122,6 @@ export default function LandingPage() {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                   </svg>
-
                 </div>
                 <div className="mx-10 mb-10">
                   <h1 className="text-xl">Live in Indonesia</h1>
@@ -113,9 +134,9 @@ export default function LandingPage() {
               <div className="flex gap-5 items-center">
                 <svg width="32px" height="30px" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#D70000">
                   <path d="M7 9L12 12.5L17 9" stroke="#D70000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path d="M2 17V7C2 5.89543 2.89543 5 4 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H4C2.89543 19 2 18.1046 2 17Z" stroke="#D70000" stroke-width="1.5"></path>
+                  <path d="M2 17V7C2 5.89543 2.89543 5 4 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H4C2.89543 19 2 18.1046 2 17Z" stroke="#D70000" stroke-width="1.1.5"></path>
                 </svg>
-                <h1 className="text-lg">@naherrrrr@gmail.com</h1>
+                <h1 className="text-lg">naherrrrr@gmail.com</h1>
               </div>
               <div className="flex gap-5 items-center">
                 <img src={Git} alt="Github" className={`max-w-8 transition-opacity duration-500 ease-in-out ${isDark ? "" : "hidden"}`}/>
@@ -126,6 +147,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
