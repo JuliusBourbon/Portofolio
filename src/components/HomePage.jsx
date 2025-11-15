@@ -9,10 +9,38 @@ import GitBlack from "../assets/Github_black.png";
 export default function LandingPage() {
   const [isDark, setDark] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [expandedBox, setExpandedBox] = useState(null);
 
   const toggleTheme = () => {
     setDark(!isDark);
   };
+
+  const handleBoxClick = (boxId) => {
+    setExpandedBox(prevExpandedBox => (prevExpandedBox === boxId ? null : boxId));
+  };
+
+  const getGridContainerClasses = () => {
+    const baseContainer = "grid h-full gap-4 my-5 transition-all duration-500 ease-in-out";
+
+    switch (expandedBox) {
+      case 1:
+        return `${baseContainer} grid-cols-[5fr_1fr] grid-rows-[5fr_1fr_1fr]`;
+      case 2:
+        return `${baseContainer} grid-cols-[1fr_5fr] grid-rows-[5fr_1fr_1fr]`;
+      case 3:
+        return `${baseContainer} grid-cols-[5fr_1fr] grid-rows-[1fr_5fr_1fr]`;
+      case 4:
+        return `${baseContainer} grid-cols-[1fr_5fr] grid-rows-[1fr_5fr_1fr]`;
+      case 5:
+        return `${baseContainer} grid-cols-[5fr_1fr] grid-rows-[1fr_1fr_5fr]`;
+      case 6:
+        return `${baseContainer} grid-cols-[1fr_5fr] grid-rows-[1fr_1fr_5fr]`;
+      default:
+        return `${baseContainer} grid-cols-[1fr_1fr] grid-rows-[1fr_1fr_1fr]`;
+    }
+  };
+
+  const baseBoxClasses = `rounded-lg cursor-pointer p-4 flex items-start justify-start ${isDark ? 'bg-[#E2F3F4]/10' : 'bg-gray-300'}`;
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -143,6 +171,36 @@ export default function LandingPage() {
                 <img src={GitBlack} alt="Github" className={`max-w-8 transition-opacity duration-500 ease-in-out ${isDark ? "hidden" : ""}`}/>
                 <h1 className="text-lg">JuliusBourbon</h1>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`${baseClasses} relative z-50 scroll-smooth`}>
+        <div className="my-20 mx-30 flex flex-col h-full">
+          <h1 className="text-5xl font-bold cursor-default">I built all this</h1>
+          <div className={getGridContainerClasses()}>
+            <div className={`${baseBoxClasses} col-start-1 row-start-1`} onClick={() => handleBoxClick(1)}>
+              <div>
+                <span className="font-bold text-lg">Project 1</span>
+                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut doloribus nisi suscipit id iure commodi sint veritatis blanditiis?</h1>
+                <img src="./vite.svg" alt="" />
+              </div>
+            </div>
+            <div className={`${baseBoxClasses} col-start-2 row-start-1`} onClick={() => handleBoxClick(2)}>
+              <span className="font-bold text-lg">Project 2</span>
+            </div>
+            <div className={`${baseBoxClasses} col-start-1 row-start-2`} onClick={() => handleBoxClick(3)}>
+              <span className="font-bold text-lg">Project 3</span>
+            </div>
+            <div className={`${baseBoxClasses} col-start-2 row-start-2`} onClick={() => handleBoxClick(4)}>
+              <span className="font-bold text-lg">Project 4</span>
+            </div>
+            <div className={`${baseBoxClasses} col-start-1 row-start-3`} onClick={() => handleBoxClick(5)}>
+              <span className="font-bold text-lg">Project 5</span>
+            </div>
+            <div className={`${baseBoxClasses} col-start-2 row-start-3`} onClick={() => handleBoxClick(6)}>
+              <span className="font-bold text-lg">Project 6</span>
             </div>
           </div>
         </div>
