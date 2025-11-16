@@ -20,7 +20,7 @@ export default function LandingPage() {
   };
 
   const getGridContainerClasses = () => {
-    const baseContainer = "grid h-full gap-4 my-5 transition-all duration-500 ease-in-out";
+    const baseContainer = "grid h-full gap-4 my-5 transition-all duration-700 ease-in-out";
 
     switch (expandedBox) {
       case 1:
@@ -40,7 +40,7 @@ export default function LandingPage() {
     }
   };
 
-  const baseBoxClasses = `rounded-lg cursor-pointer p-4 flex items-start justify-start ${isDark ? 'bg-[#E2F3F4]/10' : 'bg-gray-300'}`;
+  const baseBoxClasses = `rounded-lg cursor-pointer p-4 flex items-start ${isDark ? 'bg-[#E2F3F4]/10' : 'bg-gray-300'}`;
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -176,31 +176,130 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className={`${baseClasses} relative z-50 scroll-smooth`}>
-        <div className="my-20 mx-30 flex flex-col h-full">
+      <div className={`${baseClasses} relative z-20 scroll-smooth`}>
+        <div className="py-20 mx-30 flex flex-col h-full overflow-y-hidden">
           <h1 className="text-5xl font-bold cursor-default">I built all this</h1>
           <div className={getGridContainerClasses()}>
-            <div className={`${baseBoxClasses} col-start-1 row-start-1`} onClick={() => handleBoxClick(1)}>
-              <div>
-                <span className="font-bold text-lg">Project 1</span>
-                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut doloribus nisi suscipit id iure commodi sint veritatis blanditiis?</h1>
-                <img src="./vite.svg" alt="" />
+            <div className={`${baseBoxClasses} overflow-hidden col-start-1 row-start-1 relative`} onClick={() => handleBoxClick(1)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 1 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-2xl">Dictx-API</span>
+                  <h1 className="px-10 py-3">An API that contains a list of words from various languages</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/JavaScript.svg" alt="JavaScript" className="h-15 w-15" />
+                </div>
+                <div className={`w-full h-full overflow-y-auto transition-opacity duration-700 ease-in-out ${expandedBox === 1 ? 'opacity-100 delay-300' : 'opacity-0' }`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Dictx-API</h1>
+                    <img src="./dictx1.png" alt="Dictx-API" className="h-1/2 w-1/2"/>
+                    <h1 className="font-normal">
+                      Was built with the goal of creating an API that provides Words Collection or kind of simple Dictionary from multiple languages <br />
+                      The API base URL is dictx-api.vercel.app. There's also a documentation site with more info at dictx-doc.vercel.app. <br />
+
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/JavaScript.svg" alt="JavaScript" className="h-15 w-15" />
+                  </div>
+                </div>
               </div>
             </div>
-            <div className={`${baseBoxClasses} col-start-2 row-start-1`} onClick={() => handleBoxClick(2)}>
-              <span className="font-bold text-lg">Project 2</span>
+            <div className={`${baseBoxClasses} overflow-hidden col-start-2 row-start-1 relative `} onClick={() => handleBoxClick(2)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 2 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-lg">Gmaps Scraping</span>
+                  <h1 className="px-10 py-3">Scraping Gmaps Review containing the Reveiwer's name, date, rating, review text</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                </div>
+                <div className={`w-full h-full overflow-y-auto transition-opacity duration-700 ease-in-out ${expandedBox === 2 ? 'opacity-100 delay-300' : 'opacity-0' }`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Gmaps Scraping</h1>
+                    <h1 className="font-normal">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam
+                      vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut
+                      doloribus nisi suscipit id iure commodi sint veritatis blanditiis?
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={`${baseBoxClasses} col-start-1 row-start-2`} onClick={() => handleBoxClick(3)}>
-              <span className="font-bold text-lg">Project 3</span>
+            <div className={`${baseBoxClasses} overflow-hidden col-start-1 row-start-2 relative`} onClick={() => handleBoxClick(3)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 3 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-2xl">Scribely</span>
+                  <h1 className="px-10 py-3">Example implementation of Dictx-API. It also helps you solving 'Wordle' :p</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/React.svg" alt="React" className="h-15 w-15" />
+                </div>
+                <div className={`w-full h-full overflow-y-auto transition-opacity duration-700 ease-in-out ${expandedBox === 3 ? 'opacity-100 delay-300' : 'opacity-0' }`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Scribely</h1>
+                    <h1 className="font-normal">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam
+                      vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut
+                      doloribus nisi suscipit id iure commodi sint veritatis blanditiis?
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/React.svg" alt="React" className="h-15 w-15" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={`${baseBoxClasses} col-start-2 row-start-2`} onClick={() => handleBoxClick(4)}>
-              <span className="font-bold text-lg">Project 4</span>
+            <div className={`${baseBoxClasses} overflow-hidden col-start-2 row-start-2 relative`} onClick={() => handleBoxClick(4)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 4 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-lg">Monte Carlo Simulation</span>
+                  <h1 className="px-10 py-3">Probabilistic simulation that relies on randomization processes</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                </div>
+                <div className={`transition-all duration-1000 ease-in-out overflow-hidden ${expandedBox === 4 ? "opacity-100 h-fit" : "opacity-0 max-h-0"}`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Monte Carlo Simulation</h1>
+                    <h1 className="font-normal">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam
+                      vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut
+                      doloribus nisi suscipit id iure commodi sint veritatis blanditiis?
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={`${baseBoxClasses} col-start-1 row-start-3`} onClick={() => handleBoxClick(5)}>
-              <span className="font-bold text-lg">Project 5</span>
+            <div className={`${baseBoxClasses} overflow-hidden col-start-1 row-start-3 relative`} onClick={() => handleBoxClick(5)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 5 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-2xl">Terna</span>
+                  <h1 className="px-10 py-3">Sorting your Chinese Poker</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/React.svg" alt="React" className="h-15 w-15" />
+                </div>
+                <div className={`w-full h-full overflow-y-auto transition-opacity duration-700 ease-in-out ${expandedBox === 5 ? 'opacity-100 delay-300' : 'opacity-0' }`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Terna</h1>
+                    <h1 className="font-normal">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam
+                      vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut
+                      doloribus nisi suscipit id iure commodi sint veritatis blanditiis?
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/React.svg" alt="React" className="h-15 w-15" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={`${baseBoxClasses} col-start-2 row-start-3`} onClick={() => handleBoxClick(6)}>
-              <span className="font-bold text-lg">Project 6</span>
+            <div className={`${baseBoxClasses} overflow-hidden col-start-2 row-start-3 relative`} onClick={() => handleBoxClick(6)}>
+              <div className='w-full'>
+                <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 p-4 ${expandedBox === 6 ? 'opacity-0' : 'opacity-100'}`}>
+                  <span className="font-bold text-lg">Linear Programming</span>
+                  <h1 className="px-10 py-3">Used to solve resource allocation problems</h1>
+                  <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                </div>
+                <div className={`w-full h-full overflow-y-auto transition-opacity duration-700 ease-in-out ${expandedBox === 6 ? 'opacity-100 delay-300' : 'opacity-0' }`}>
+                  <div className="flex flex-col gap-4 mx-10">
+                    <h1 className={`text-2xl font-bold`}>Linear Programming</h1>
+                    <h1 className="font-normal">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam
+                      vel dolores, fuga fugit ratione enim nobis nulla tenetur minima, aut
+                      doloribus nisi suscipit id iure commodi sint veritatis blanditiis?
+                    </h1>
+                    <img src="https://icon.icepanel.io/Technology/svg/Python.svg" alt="Python" className="w-16 h-16" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
