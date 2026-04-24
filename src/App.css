@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+.windsong-regular {
+  font-family: "WindSong", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
