@@ -12,6 +12,11 @@ const dictx_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089111/d
 const dictx_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089112/dictx_2_lrodi9.png'
 const dictx_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089112/dictx_3_lws95k.png'
 
+// Scribely Image
+const scribely_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089129/scribely_1_ngtuj5.png'
+const scribely_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089130/scribely_2_eldcvd.png'
+const scribely_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089130/scribely_3_kgqswi.png'
+
 export interface ProjectsItem {
   id: number;
   title: string;
@@ -99,23 +104,31 @@ export const projects: ProjectsItem[] = [
   },
   {
     id: 3,
-    title: 'Dictx API',
-    description: 'A simple multi language dictionary API',
-    image: seism_1,
+    title: 'Scribely',
+    description: 'An example implementation for Dictionary API',
+    image: scribely_1,
     detail: {
       overview:
-        '',
+        'Using Dictx-API, I created a simple web application called Scribely that offers an interactive and responsive interface to help User find words that matching user Input. It help you to solve Wordle :p.',
       role: 'Fullstack Developer',
       year: '2025',
-      duration: '2 months',
-      liveUrl: '#',
-      githubUrl: '#',
+      duration: '2 weeks',
+      liveUrl: 'https://word-scribely.vercel.app/',
+      githubUrl: 'https://github.com/JuliusBourbon/Scribely',
       highlights: [
-        ''
+        'Interactive and responsive interface for searching words',
+        'Integration with Dictx-API for seamless word lookup',
+        'Wordle Cheat Tool',
+
       ],
-      gallery: [],
+      gallery: [scribely_1, scribely_2, scribely_3],
       stack: [
-        { name: '', category: '' },
+        { name: 'React', category: 'Frontend' },
+        { name: 'Tailwind', category: 'Frontend' },
+        { name: 'Restful API', category: 'Backend' },
+        { name: 'Node.js', category: 'Backend' },
+        { name: 'Express', category: 'Backend' },
+
       ],
     },
   },
