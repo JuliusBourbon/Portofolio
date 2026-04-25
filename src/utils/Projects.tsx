@@ -7,6 +7,11 @@ const seism_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/s
 const seism_6 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087388/seism_6_nsrhjx.png'
 const seism_7 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087388/seism_7_m8k5df.png'
 
+// Dictionary API Image
+const dictx_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089111/dictx_1_s1eizg.png'
+const dictx_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089112/dictx_2_lrodi9.png'
+const dictx_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777089112/dictx_3_lws95k.png'
+
 export interface ProjectsItem {
   id: number;
   title: string;
@@ -68,23 +73,27 @@ export const projects: ProjectsItem[] = [
   },
   {
     id: 2,
-    title: 'Dictx API',
+    title: 'Dictionary API',
     description: 'A simple multi language dictionary API',
-    image: seism_1,
+    image: dictx_1,
     detail: {
       overview:
-        '',
+        'Dictionary API or i called it Dictx-API was build with the goal of creating an API that provides word collections from multiple languages. Also this is actually my first time learning and creating an API.',
       role: 'Fullstack Developer',
       year: '2025',
-      duration: '2 months',
-      liveUrl: '#',
-      githubUrl: '#',
+      duration: '1 week',
+      liveUrl: 'https://dictx-doc.vercel.app/',
+      githubUrl: 'https://github.com/JuliusBourbon/dictx-api',
       highlights: [
-        ''
+        'Easy and free to use',
+        'Currently available languages are English, Indonesia, Japan, Franch, Germany and Italy'
       ],
-      gallery: [],
+      gallery: [dictx_1, dictx_2, dictx_3],
       stack: [
-        { name: '', category: '' },
+        { name: 'HTML', category: 'Frontend' },
+        { name: 'Javascript', category: 'Backend' },
+        { name: 'Node.js', category: 'Backend' },
+        { name: 'Express', category: 'Backend' },
       ],
     },
   },
