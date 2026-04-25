@@ -13,32 +13,27 @@ export interface SkillItem {
 export const stats: StatItem[] = [
   {
     label: 'Academic & Personal Projects',
-    value: '30+',
+    value: '20+',
     color: 'bg-peach/20',
   },
   {
     label: 'Certifications Earned',
-    value: '15+',
+    value: '10+',
     color: 'bg-mint/20',
   },
-  // {
-  //   label: 'at Universitas Komputer Indonesia',
-  //   value: 'Currently studying',
-  //   color: 'bg-lavender/20',
-  // },
-  ]
+]
   
 export const skills: SkillItem[] = [
     {
       category: 'Frontend',
-      items: ['React', 'Vue', 'TypeScript', 'Tailwind CSS', 'Framer Motion']
+      items: ['React', 'Next', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Blade', 'Bootstrap']
     },
     {
       category: 'Backend',
-      items: ['Node.js', 'Python', 'PostgreSQL', 'GraphQL', 'Redis']
+      items: ['Node.js', 'Python', 'PostgreSQL', 'GraphQL', 'RESTful API', 'Express', 'Laravel']
     },
     {
       category: 'Tools',
-      items: ['Git', 'Docker', 'AWS', 'Figma', 'Jest']
+      items: ['Git', 'Docker', 'AWS', 'Figma', 'Postman', 'Agentic AI']
     },
 ]

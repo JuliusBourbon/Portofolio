@@ -99,7 +99,7 @@ export default function About() {
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mb-12">
+            <div className="grid grid-cols-2 gap-4 mb-12">
               {stats.map((stat, index) => (
                 <div
                   key={index}
