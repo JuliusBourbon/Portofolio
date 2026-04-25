@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import profile_image from '../assets/hhe.jpeg'
 import { TechStack } from '../utils/TechStack.tsx';
+
+const profile_image = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087440/hhe_o2lskm.jpg'
 
 export default function Hero() {
   return (

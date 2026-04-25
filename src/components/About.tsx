@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { stats, skills } from '../utils/Abouts.tsx'
-import about_image_1 from '../assets/about_image_1.jpg'
-import about_image_2 from '../assets/about_image_2.jpg'
-import about_image_3 from '../assets/about_image_3.jpg'
-import about_image_4 from '../assets/about_image_4.jpg'
-import about_image_5 from '../assets/about_image_5.jpg'
+
+const about_image_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087432/about_image_1_htzyhx.jpg'
+const about_image_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087435/about_image_2_bopy89.jpg'
+const about_image_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087437/about_image_3_cuxanu.jpg'
+const about_image_4 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087438/about_image_4_owgilx.jpg'
+const about_image_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087434/about_image_5_vqfv4b.jpg'
 const images = [about_image_4, about_image_3, about_image_5, about_image_2, about_image_1]
 
 export default function About() {

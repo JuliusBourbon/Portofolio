@@ -1,10 +1,11 @@
-import seism_1 from '../assets/Seism/seism_1.png'
-import seism_2 from '../assets/Seism/seism_2.png'
-import seism_3 from '../assets/Seism/seism_3.png'
-import seism_4 from '../assets/Seism/seism_4.png'
-import seism_5 from '../assets/Seism/seism_5.png'
-import seism_6 from '../assets/Seism/seism_6.png'
-import seism_7 from '../assets/Seism/seism_7.png'
+// Seism Image
+const seism_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/seism_1_d0nigx.png'
+const seism_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/seism_2_lojcjw.png'
+const seism_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/seism_3_zbak1s.png'
+const seism_4 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/seism_4_kwiinp.png'
+const seism_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087387/seism_5_ggmrpp.png'
+const seism_6 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087388/seism_6_nsrhjx.png'
+const seism_7 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087388/seism_7_m8k5df.png'
 
 export interface ProjectsItem {
   id: number;
@@ -62,6 +63,50 @@ export const projects: ProjectsItem[] = [
         { name: 'Node.js', category: 'Backend' },
         { name: 'Express', category: 'Backend' },
         { name: 'SQL', category: 'Backend' },
+      ],
+    },
+  },
+  {
+    id: 2,
+    title: 'Dictx API',
+    description: 'A simple multi language dictionary API',
+    image: seism_1,
+    detail: {
+      overview:
+        '',
+      role: 'Fullstack Developer',
+      year: '2025',
+      duration: '2 months',
+      liveUrl: '#',
+      githubUrl: '#',
+      highlights: [
+        ''
+      ],
+      gallery: [],
+      stack: [
+        { name: '', category: '' },
+      ],
+    },
+  },
+  {
+    id: 3,
+    title: 'Dictx API',
+    description: 'A simple multi language dictionary API',
+    image: seism_1,
+    detail: {
+      overview:
+        '',
+      role: 'Fullstack Developer',
+      year: '2025',
+      duration: '2 months',
+      liveUrl: '#',
+      githubUrl: '#',
+      highlights: [
+        ''
+      ],
+      gallery: [],
+      stack: [
+        { name: '', category: '' },
       ],
     },
   },
