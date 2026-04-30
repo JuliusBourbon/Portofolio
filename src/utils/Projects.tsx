@@ -31,6 +31,13 @@ const terna_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777110820/T
 const terna_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777110821/Terna_2_q7vqyf.png'
 const terna_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777110822/Terna_3_eq3bvh.png'
 
+// Acdemic Image
+const academic_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_1_qqvkr3.png'
+const academic_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_2_ufgjcj.png'
+const academic_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_3_okejhg.png'
+const academic_4 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_4_tfdl2c.png'
+const academic_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_5_grt3bf.png'
+
 export interface ProjectsItem {
   id: number;
   title: string;
@@ -220,6 +227,34 @@ export const projects: ProjectsItem[] = [
       gallery: [terna_1, terna_2, terna_3],
       stack: [
         { name: 'React', category: 'Frontend' },
+        { name: 'Tailwind', category: 'Frontend' },
+      ],
+    },
+  },
+  {
+    id: 7,
+    title: 'Academic Payment System',
+    description: 'Implementing database using MySQL and creating a simple academic payment system using Laravel',
+    image: academic_1,
+    detail: {
+      overview:
+        'The Academic Payment System is a web application designed to streamline the payment process for academic-related fees. It implements a database using MySQL and provides a user-friendly interface using Laravel.',
+      role: 'Fullstack Developer',
+      year: '2025',
+      duration: '1 months',
+      liveUrl: '#',
+      githubUrl: 'https://github.com/JuliusBourbon/pembayaran-akademik',
+      highlights: [
+        'Designed and implemented a MySQL database to manage student information, payment records, and fee structures.',
+        'Developed a web application using Laravel that allows students to view their payment history and make payments',
+        'Implemented features such as payment status tracking, receipt generation, and administrative controls for managing fees and payments.'
+      ],
+      gallery: [academic_1, academic_2, academic_3, academic_4, academic_5],
+      stack: [
+        { name: 'PHP', category: 'Backend' },
+        { name: 'MySQL', category: 'Backend' },
+        { name: 'Laravel', category: 'Backend' },
+        { name: 'Blade', category: 'Frontend' },
         { name: 'Tailwind', category: 'Frontend' },
       ],
     },

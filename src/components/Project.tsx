@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { projects, type ProjectsItem } from '../utils/Projects.tsx'
 import ProjectModal from './ProjectModal'
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<ProjectsItem | null>(null)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const limit = isMobile ? 3 : 6
+  const visibleProjects = isExpanded ? projects : projects.slice(0, limit)
 
   return (
     <>
@@ -27,7 +38,7 @@ export default function Projects() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
+            {visibleProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -86,6 +97,22 @@ export default function Projects() {
               </motion.div>
             ))}
           </div>
+
+          {projects.length > limit && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="mt-12 flex justify-center"
+            >
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="cursor-pointer px-8 py-3 bg-lavender text-textDark dark:text-white font-medium rounded-full hover:bg-lavender/90 transition-all hover:shadow-soft-lg hover:underline"
+              >
+                {isExpanded ? 'Show Less' : 'Show More'}
+              </button>
+            </motion.div>
+          )}
         </div>
       </section>
 
