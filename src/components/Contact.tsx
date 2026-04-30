@@ -1,8 +1,50 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon, DribbbleIcon } from '../utils/Icons'
+import { GithubIcon, LinkedinIcon, TwitterIcon} from '../utils/Icons'
+import toast from 'react-hot-toast'
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const formEndpoint = 'https://formspree.io/f/xpqknpzd'
+
+    try {
+      const response = await fetch(formEndpoint, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        toast.success('Pesan berhasil dikirim!')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        toast.error('Gagal mengirim pesan. Pastikan ID Formspree sudah benar.')
+      }
+    } catch (error) {
+      toast.error('Terjadi kesalahan jaringan saat mengirim pesan.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  }
+
   const socialLinks = [
     {
       icon: <GithubIcon size={20} />,
@@ -18,11 +60,6 @@ export default function Contact() {
       icon: <TwitterIcon size={20} />,
       href: 'https://twitter.com/juliusbourbonn',
       label: 'Twitter',
-    },
-    {
-      icon: <DribbbleIcon size={20} />,
-      href: 'https://dribbble.com/raihanfathir',
-      label: 'Dribbble',
     },
   ]
   return (
@@ -78,7 +115,7 @@ export default function Contact() {
           }}
           className="bg-background p-8 md:p-10 rounded-3xl shadow-soft border border-gray-100"
         >
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label
@@ -90,6 +127,9 @@ export default function Contact() {
                 <input
                   type="text"
                   id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="John Doe"
                 />
@@ -104,6 +144,9 @@ export default function Contact() {
                 <input
                   type="email"
                   id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="john@example.com"
                 />
@@ -120,6 +163,9 @@ export default function Contact() {
               <textarea
                 id="message"
                 rows={5}
+                value={formData.message}
+                onChange={handleChange}
+                required
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all resize-none"
                 placeholder="Tell me about your project..."
               ></textarea>
@@ -127,9 +173,10 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full py-4 bg-textDark text-white font-medium rounded-xl hover:bg-textDark/90 transition-colors flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className="w-full py-4 hover:bg-gray-100 border border-gray-300 text-black cursor-pointer font-medium rounded-xl hover:bg-textDark/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
               <Send size={18} />
             </button>
           </form>

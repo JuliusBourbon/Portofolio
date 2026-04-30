@@ -5,10 +5,12 @@ import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import CustomScrollbar from './components/CustomScrollbar';
+import { Toaster } from 'react-hot-toast';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-background text-textGray font-sans selection:bg-lavender/30 selection:text-textDark">
+      <Toaster position="bottom-right" />
       <Navbar />
       <CustomScrollbar />
       <main>
