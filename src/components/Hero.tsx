@@ -30,7 +30,7 @@ export default function Hero() {
           }}
           className="flex flex-col items-start"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-textDark leading-[1.1] mb-6">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-textDark dark:text-white leading-[1.1] mb-6">
             Hi, I'm <br />
             <span className="relative inline-block">
               Raihan Fathir Muhammad
@@ -49,11 +49,11 @@ export default function Hero() {
             </span>
           </h1>
 
-          <h2 className="text-xl md:text-3xl text-textGray mb-6 font-medium">
+        <h2 className="text-xl md:text-3xl text-textGray dark:text-gray-300 mb-6 font-medium">
             Fullstack Developer
           </h2>
 
-          <p className="text-lg text-textGray mb-8 max-w-lg leading-relaxed">
+        <p className="text-lg text-textGray dark:text-gray-300 mb-8 max-w-lg leading-relaxed">
             I am an Informatics Engineering student at <b>Universitas Komputer Indonesia</b> with a strong passion for Web Development, Software Engineering and Data Analytics. I am a proactive individual who consistently stays updated with the latest technological advancements and trends.
           </p>
 
@@ -81,15 +81,14 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <a
-              href="#projects"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-lavender text-textDark font-medium rounded-full hover:bg-lavender/90 transition-all hover:shadow-soft-lg hover:-translate-y-1"
+              href="#projects" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-lavender dark:text-white font-medium rounded-full hover:bg-lavender/90 transition-all hover:shadow-soft-lg hover:-translate-y-1"
             >
               View Projects
               <ArrowRight size={18} />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-textDark/10 text-textDark font-medium rounded-full hover:border-textDark/30 transition-all hover:shadow-soft hover:-translate-y-1"
+            className="inline-flex items-center justify-center px-8 py-4 bg-white dark:bg-gray-800 border-2 border-textDark/10 dark:border-gray-700 text-textDark dark:text-white font-medium rounded-full hover:border-textDark/30 dark:hover:border-gray-500 transition-all hover:shadow-soft hover:-translate-y-1"
             >
               Get in Touch
             </a>
@@ -121,7 +120,7 @@ export default function Hero() {
           </div>
           {/* Decorative elements behind image */}
           <div className="absolute -inset-4 bg-linear-to-tr from-lavender/40 to-peach/40 rounded-3xl -z-10 transform rotate-3"></div>
-          <div className="absolute -inset-4 bg-white rounded-3xl -z-20 transform -rotate-2 shadow-soft"></div>
+        <div className="absolute -inset-4 bg-gray-300 dark:bg-gray-800 rounded-3xl -z-20 transform -rotate-2 shadow-soft duration-500"></div>
         </motion.div>
       </div>
     </section>

@@ -65,7 +65,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 px-6 bg-white relative overflow-hidden"
+      className="py-24 px-6 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
     >
       {/* Decorative background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-linear-to-b from-lavender/5 to-transparent pointer-events-none"></div>
@@ -88,10 +88,10 @@ export default function Contact() {
           }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark mb-4">
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark dark:text-white mb-4">
             Let's Work Together
           </h2>
-          <p className="text-lg text-textGray">
+        <p className="text-lg text-textGray dark:text-gray-300">
             Have a project in mind or just want to say hi? I'd love to hear from
             you.
           </p>
@@ -113,14 +113,14 @@ export default function Contact() {
             duration: 0.6,
             delay: 0.2,
           }}
-          className="bg-background p-8 md:p-10 rounded-3xl shadow-soft border border-gray-100"
+        className="bg-background dark:bg-gray-800 p-8 md:p-10 rounded-3xl shadow-soft border border-gray-100 dark:border-gray-700"
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label
                   htmlFor="name"
-                  className="text-sm font-medium text-textDark"
+                className="text-sm font-medium text-textDark dark:text-white"
                 >
                   Name
                 </label>
@@ -130,14 +130,14 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="John Doe"
                 />
               </div>
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-textDark"
+                className="text-sm font-medium text-textDark dark:text-white"
                 >
                   Email
                 </label>
@@ -147,7 +147,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -156,7 +156,7 @@ export default function Contact() {
             <div className="space-y-2">
               <label
                 htmlFor="message"
-                className="text-sm font-medium text-textDark"
+              className="text-sm font-medium text-textDark dark:text-white"
               >
                 Message
               </label>
@@ -166,7 +166,7 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all resize-none"
                 placeholder="Tell me about your project..."
               ></textarea>
             </div>
@@ -174,7 +174,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 hover:bg-gray-100 border border-gray-300 text-black cursor-pointer font-medium rounded-xl hover:bg-textDark/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full py-4 border border-gray-300 dark:border-gray-600 text-black dark:text-white cursor-pointer font-medium rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
               <Send size={18} />
@@ -205,7 +205,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="p-4 bg-white rounded-full text-textGray hover:text-lavender hover:shadow-soft hover:-translate-y-1 transition-all"
+            className="p-4 bg-white dark:bg-gray-800 rounded-full text-textGray dark:text-gray-300 hover:text-lavender dark:hover:text-lavender hover:shadow-soft hover:-translate-y-1 transition-all"
             >
               {link.icon}
             </a>

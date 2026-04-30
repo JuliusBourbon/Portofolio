@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background text-textGray font-sans selection:bg-lavender/30 selection:text-textDark">
+    <div className="min-h-screen bg-background dark:bg-gray-900 text-textGray dark:text-gray-300 font-sans selection:bg-lavender/30 selection:text-textDark dark:selection:text-white transition-colors duration-300">
       <Toaster position="bottom-right" />
       <Navbar />
       <CustomScrollbar />

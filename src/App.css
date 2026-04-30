@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 .windsong-regular {
   font-family: "WindSong", cursive;
   font-weight: 400;

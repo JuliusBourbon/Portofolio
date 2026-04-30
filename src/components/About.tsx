@@ -21,7 +21,7 @@ export default function About() {
     }, [])
   
   return (
-    <section id="about" className="py-24 px-6 relative overflow-hidden">
+    <section id="about" className="py-24 px-6 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -41,7 +41,7 @@ export default function About() {
             }}
             className="relative"
           >
-            <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden shadow-soft-lg z-10 bg-gray-100">
+            <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden shadow-soft-lg z-10 bg-gray-100 dark:bg-gray-800">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
@@ -89,11 +89,11 @@ export default function About() {
               duration: 0.8,
             }}
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark dark:text-white mb-6">
               About Me
             </h2>
 
-            <div className="space-y-4 text-lg text-textGray mb-10">
+            <div className="space-y-4 text-lg text-textGray dark:text-gray-300 mb-10">
               <p>
                 Through various hands-on academic projects, I have developed a strong fundamentals in programming logic and data processing. I thrive on turning complex challenges into clean, efficient, and user-friendly technological solutions. I am currently looking for an internship opportunity where I can bring my technical expertise to a professional team and solve real-industry problems.
               </p>
@@ -105,10 +105,10 @@ export default function About() {
                   key={index}
                   className={`p-4 rounded-2xl ${stat.color} text-center`}
                 >
-                  <div className="text-2xl md:text-3xl font-serif font-bold text-textDark mb-1">
+                  <div className="text-2xl md:text-3xl font-serif font-bold text-textDark dark:text-white mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-xs md:text-sm text-textGray font-medium">
+                  <div className="text-xs md:text-sm text-textGray dark:text-gray-300 font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -118,14 +118,14 @@ export default function About() {
             <div className="space-y-6">
               {skills.map((skillGroup) => (
                 <div key={skillGroup.category}>
-                  <h3 className="text-sm font-bold text-textDark uppercase tracking-wider mb-3">
+                  <h3 className="text-sm font-bold text-textDark dark:text-white uppercase tracking-wider mb-3">
                     {skillGroup.category}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {skillGroup.items.map((skill) => (
                       <span
                         key={skill}
-                        className="px-4 py-2 bg-white shadow-sm rounded-full text-sm font-medium text-textGray border border-gray-100"
+                        className="px-4 py-2 bg-white dark:bg-gray-800 shadow-sm rounded-full text-sm font-medium text-textGray dark:text-gray-300 border border-gray-100 dark:border-gray-700"
                       >
                         {skill}
                       </span>
