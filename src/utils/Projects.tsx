@@ -71,7 +71,7 @@ export const projects: ProjectsItem[] = [
       year: '2025',
       duration: '2 months',
       liveUrl: '#',
-      githubUrl: '#',
+      githubUrl: 'https://github.com/JuliusBourbon/Seism',
       highlights: [
         'Restful API development with Node.js and Express to handle disaster report submissions and data retrieval.',
         'Visualized disaster data using leaflet.js, enabling users to see real-time impacts on an interactive map.',
