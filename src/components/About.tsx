@@ -11,14 +11,37 @@ const images = [about_image_4, about_image_3, about_image_5, about_image_2, abou
 
 export default function About() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState(false)
 
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % images.length)
-      }, 4000)
-      
-      return () => clearInterval(timer)
-    }, [])
+  useEffect(() => {
+    let loadedCount = 0
+
+    const preloadImages = images.map((src) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image()
+        img.src = src
+        img.onload = () => {
+          loadedCount++
+          resolve()
+        }
+        img.onerror = () => resolve()
+      })
+    })
+
+    Promise.all(preloadImages).then(() => {
+      setImagesLoaded(true)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!imagesLoaded) return
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length)
+    }, 4000)
+
+    return () => clearInterval(timer)
+  }, [imagesLoaded])  
   
   return (
     <section id="about" className="py-24 px-6 relative overflow-hidden transition-colors duration-300">
@@ -42,18 +65,22 @@ export default function About() {
             className="relative"
           >
             <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden shadow-soft-lg z-10 bg-gray-100 dark:bg-gray-800">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentIndex}
-                  src={images[currentIndex]}
-                  alt={`About me ${currentIndex + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeInOut' }}
-                />
-              </AnimatePresence>
+              {!imagesLoaded ? (
+                <div className="absolute inset-0 w-full h-full bg-gray-200 animate-pulse" />
+              ) : (
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentIndex}
+                    src={images[currentIndex]}
+                    alt={`About me ${currentIndex + 1}`}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeInOut' }}
+                  />
+                </AnimatePresence>
+              )}
 
               {/* Dots Indicator */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
