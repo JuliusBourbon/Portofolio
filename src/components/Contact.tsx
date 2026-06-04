@@ -1,128 +1,97 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon} from '../utils/Icons'
+import { GithubIcon, LinkedinIcon, TwitterIcon } from '../utils/Icons'
 import toast from 'react-hot-toast'
 
+const SOCIAL_LINKS = [
+  { icon: <GithubIcon size={18} />, href: 'https://github.com/JuliusBourbon', label: 'GitHub' },
+  { icon: <LinkedinIcon size={18} />, href: 'https://linkedin.com/in/naherr', label: 'LinkedIn' },
+  { icon: <TwitterIcon size={18} />, href: 'https://twitter.com/juliusbourbonn', label: 'Twitter' },
+]
+
+const FORM_ENDPOINT = 'https://formspree.io/f/xpqknpzd'
+
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-
-    const formEndpoint = 'https://formspree.io/f/xpqknpzd'
-
     try {
-      const response = await fetch(formEndpoint, {
+      const res = await fetch(FORM_ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-
-      if (response.ok) {
+      if (res.ok) {
         toast.success('Pesan berhasil dikirim!')
         setFormData({ name: '', email: '', message: '' })
       } else {
         toast.error('Gagal mengirim pesan. Pastikan ID Formspree sudah benar.')
       }
-    } catch (error) {
+    } catch {
       toast.error('Terjadi kesalahan jaringan saat mengirim pesan.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }))
-  }
+  const inputClass = `
+    w-full px-4 py-3 border-2 border-black bg-white dark:bg-[#222]
+    text-black dark:text-white text-sm font-mono
+    placeholder:text-gray-400 dark:placeholder:text-gray-600
+    focus:outline-none focus:ring-0 focus:border-[#FF3F3F]
+    shadow-[2px_2px_0_#000] focus:shadow-[3px_3px_0_#FF3F3F]
+    transition-all duration-150
+  `
 
-  const socialLinks = [
-    {
-      icon: <GithubIcon size={20} />,
-      href: 'https://github.com/JuliusBourbon',
-      label: 'GitHub',
-    },
-    {
-      icon: <LinkedinIcon size={20} />,
-      href: 'https://linkedin.com/in/naherr',
-      label: 'LinkedIn',
-    },
-    {
-      icon: <TwitterIcon size={20} />,
-      href: 'https://twitter.com/juliusbourbonn',
-      label: 'Twitter',
-    },
-  ]
   return (
     <section
       id="contact"
-      className="py-24 px-6 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
+      className="py-24 px-6 bg-[#FFF9F0] dark:bg-[#1a1a1a] border-t-3 border-black font-mono"
     >
-      {/* Decorative background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-linear-to-b from-lavender/5 to-transparent pointer-events-none"></div>
+      <div className="max-w-3xl mx-auto">
 
-      <div className="max-w-3xl mx-auto relative z-10">
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-          className="text-center mb-12"
-        >
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark dark:text-white mb-4">
-            Let's Work Together
+        {/* Header */}
+        <div className="mb-12">
+          <span className="inline-block border-2 text-black border-black bg-[#FFE135] px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-[2px_2px_0_#000] mb-4">
+            Get in Touch
+          </span>
+          <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-[1.05] text-black dark:text-white mb-4">
+            Let's Work<br />
+            <span className="inline-block bg-[#FF3F3F] text-white px-2 -rotate-1">
+              Together.
+            </span>
           </h2>
-        <p className="text-lg text-textGray dark:text-gray-300">
-            Have a project in mind or just want to say hi? I'd love to hear from
-            you.
+          <p className="font-sans text-sm text-gray-600 dark:text-gray-400 max-w-md">
+            Have a project in mind or just want to say hi? I'd love to hear from you.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.2,
-          }}
-        className="bg-background dark:bg-gray-800 p-8 md:p-10 rounded-3xl shadow-soft border border-gray-100 dark:border-gray-700"
-        >
-          <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Form card */}
+        <div className="border-3 border-black bg-white dark:bg-[#111] shadow-[6px_6px_0_#000]">
+
+          {/* Card header strip */}
+          <div className="border-b-3 border-black px-8 py-4 flex items-center gap-3 bg-black">
+            <span className="w-3 h-3 border-2 border-[#FF3F3F] bg-[#FF3F3F]" />
+            <span className="w-3 h-3 border-2 border-[#FFE135] bg-[#FFE135]" />
+            <span className="w-3 h-3 border-2 border-[#4ADE80] bg-[#4ADE80]" />
+            <span className="ml-auto text-[11px] font-black uppercase tracking-widest text-gray-400">
+              new_message.txt
+            </span>
+          </div>
+
+          <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-6">
+
+            {/* Name + Email */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label
-                  htmlFor="name"
-                className="text-sm font-medium text-textDark dark:text-white"
-                >
-                  Name
+                <label htmlFor="name" className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
+                  Name <span className="text-[#FF3F3F]">*</span>
                 </label>
                 <input
                   type="text"
@@ -130,16 +99,13 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="John Doe"
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                className="text-sm font-medium text-textDark dark:text-white"
-                >
-                  Email
+                <label htmlFor="email" className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
+                  Email <span className="text-[#FF3F3F]">*</span>
                 </label>
                 <input
                   type="email"
@@ -147,18 +113,16 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all"
                   placeholder="john@example.com"
+                  className={inputClass}
                 />
               </div>
             </div>
 
+            {/* Message */}
             <div className="space-y-2">
-              <label
-                htmlFor="message"
-              className="text-sm font-medium text-textDark dark:text-white"
-              >
-                Message
+              <label htmlFor="message" className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
+                Message <span className="text-[#FF3F3F]">*</span>
               </label>
               <textarea
                 id="message"
@@ -166,51 +130,53 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-textDark dark:text-white focus:outline-none focus:ring-2 focus:ring-lavender/50 focus:border-lavender transition-all resize-none"
                 placeholder="Tell me about your project..."
-              ></textarea>
+                className={`${inputClass} resize-none`}
+              />
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={isSubmitting}
-            className="w-full py-4 border border-gray-300 dark:border-gray-600 text-black dark:text-white cursor-pointer font-medium rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full py-4 border-3 border-black bg-[#FF3F3F] text-white font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-[4px_4px_0_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0_#000]"
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
-              <Send size={18} />
+              {isSubmitting ? (
+                <>
+                  <span className="inline-block w-3 h-3 border-2 border-white border-t-transparent animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message <Send size={15} />
+                </>
+              )}
             </button>
           </form>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          whileInView={{
-            opacity: 1,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.4,
-          }}
-          className="mt-12 flex justify-center gap-4"
-        >
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.label}
-            className="p-4 bg-white dark:bg-gray-800 rounded-full text-textGray dark:text-gray-300 hover:text-lavender dark:hover:text-lavender hover:shadow-soft hover:-translate-y-1 transition-all"
-            >
-              {link.icon}
-            </a>
-          ))}
-        </motion.div>
+        {/* Social links */}
+        <div className="mt-0 border-l-3 border-r-3 border-b-3 border-black flex items-center justify-between px-8 py-5 bg-[#FFF9F0] dark:bg-[#1a1a1a]">
+          <p className="text-[11px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
+            Find me on
+          </p>
+          <div className="flex gap-2">
+            {SOCIAL_LINKS.map(link => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.label}
+                className="flex items-center gap-2 border-2 border-black bg-white dark:bg-[#222] text-black dark:text-white px-3 py-2 text-[11px] font-black uppercase shadow-[2px_2px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#000] hover:bg-[#FFE135] dark:hover:bg-[#FFE135] dark:hover:text-black transition-all"
+              >
+                {link.icon}
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   )

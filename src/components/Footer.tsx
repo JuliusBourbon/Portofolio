@@ -1,41 +1,71 @@
 import { ArrowUp } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '../utils/Icons'
 
-export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-  return (
-    <footer className="py-8 px-6 border-t border-gray-200 dark:border-gray-800 bg-background dark:bg-gray-950 text-center relative transition-colors duration-300">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-textGray dark:text-gray-400 text-sm">
-          © {new Date().getFullYear()} Julius. All rights reserved.
-        </p>
+const SOCIAL_LINKS = [
+  { icon: <GithubIcon size={16} />, href: 'https://github.com/JuliusBourbon', label: 'GitHub' },
+  { icon: <LinkedinIcon size={16} />, href: 'https://linkedin.com/in/naherr', label: 'LinkedIn' },
+  { icon: <TwitterIcon size={16} />, href: 'https://twitter.com/juliusbourbonn', label: 'Twitter' },
+]
 
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-5">
-            <a href="https://github.com/JuliusBourbon" target="_blank" rel="noopener noreferrer" className="text-textGray dark:text-gray-400 hover:text-textDark dark:hover:text-white transition-colors" aria-label="GitHub">
-              <GithubIcon size={18} />
-            </a>
-            <a href="https://linkedin.com/in/naherr" target="_blank" rel="noopener noreferrer" className="text-textGray dark:text-gray-400 hover:text-textDark dark:hover:text-white transition-colors" aria-label="LinkedIn">
-              <LinkedinIcon size={18} />
-            </a>
-            <a href="https://twitter.com/juliusbourbonn" target="_blank" rel="noopener noreferrer" className="text-textGray dark:text-gray-400 hover:text-textDark dark:hover:text-white transition-colors" aria-label="Twitter">
-              <TwitterIcon size={18} />
-            </a>
-          </div>
+export default function Footer() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  return (
+    <footer className="border-t-3 border-black bg-black font-mono">
+
+      {/* Main row */}
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-stretch">
+
+        {/* Logo / copyright */}
+        <div className="flex items-center gap-3 px-8 py-5 border-b-3 md:border-b-0 md:border-r-3 border-black flex-1">
+          <span className="inline-block bg-[#FF3F3F] text-white border-2 border-white px-2 py-0.5 text-sm font-black shadow-[2px_2px_0_#fff]">
+            JULIUS WORKSPACE
+          </span>
+          <span className="text-[11px] font-black uppercase tracking-widest text-gray-400">
+            © {new Date().getFullYear()} — All rights reserved.
+          </span>
         </div>
 
+        {/* Social links */}
+        <div className="flex items-center gap-0 border-b-3 md:border-b-0 md:border-r-3 border-black">
+          {SOCIAL_LINKS.map((link, i) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.label}
+              className={`flex items-center gap-2 px-5 py-5 text-[11px] font-black uppercase tracking-widest text-gray-400 hover:bg-[#FFE135] hover:text-black transition-colors
+                ${i < SOCIAL_LINKS.length - 1 ? 'border-r border-gray-700' : ''}`}
+            >
+              {link.icon}
+              <span className="hidden sm:inline">{link.label}</span>
+            </a>
+          ))}
+        </div>
+
+        {/* Back to top */}
         <button
           onClick={scrollToTop}
-          className="p-2 text-textGray dark:text-gray-400 hover:text-textDark dark:hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
+          className="flex items-center justify-center gap-2 px-8 py-5 text-[11px] font-black uppercase tracking-widest text-gray-400 hover:bg-[#FFE135] hover:text-black transition-colors cursor-pointer group"
         >
           Back to top
-          <ArrowUp size={16} />
+          <ArrowUp
+            size={14}
+            className="group-hover:-translate-y-0.5 transition-transform"
+          />
         </button>
+      </div>
+
+      {/* Bottom marquee strip */}
+      <div className="border-t border-gray-800 overflow-hidden py-2">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={i} className="text-[11px] font-black uppercase tracking-widest text-white px-6">
+              Fullstack Developer · Web Development · Software Engineering · Data Analytics · Open to Internship ·
+            </span>
+          ))}
+        </div>
       </div>
     </footer>
   )

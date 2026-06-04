@@ -1,158 +1,144 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { stats, skills } from '../utils/Abouts.tsx'
 
-const about_image_1 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087432/about_image_1_htzyhx.jpg'
-const about_image_2 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087435/about_image_2_bopy89.jpg'
-const about_image_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087437/about_image_3_cuxanu.jpg'
-const about_image_4 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087438/about_image_4_owgilx.jpg'
-const about_image_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087434/about_image_5_vqfv4b.jpg'
-const images = [about_image_4, about_image_3, about_image_5, about_image_2, about_image_1]
+const images = [
+  'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087438/about_image_4_owgilx.jpg',
+  'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087437/about_image_3_cuxanu.jpg',
+  'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087434/about_image_5_vqfv4b.jpg',
+  'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087435/about_image_2_bopy89.jpg',
+  'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777087432/about_image_1_htzyhx.jpg',
+]
+
+const SKILL_COLORS = [
+  'bg-[#FFE135]',
+  'bg-[#E8F5FF]',
+  'bg-[#F0FFE8]',
+  'bg-[#F5E8FF]',
+  'bg-[#FFF0E8]',
+]
 
 export default function About() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [imagesLoaded, setImagesLoaded] = useState(false)
 
   useEffect(() => {
-    let loadedCount = 0
-
-    const preloadImages = images.map((src) => {
-      return new Promise<void>((resolve) => {
+    Promise.all(
+      images.map(src => new Promise<void>(res => {
         const img = new Image()
         img.src = src
-        img.onload = () => {
-          loadedCount++
-          resolve()
-        }
-        img.onerror = () => resolve()
-      })
-    })
-
-    Promise.all(preloadImages).then(() => {
-      setImagesLoaded(true)
-    })
+        img.onload = () => res()
+        img.onerror = () => res()
+      }))
+    ).then(() => setImagesLoaded(true))
   }, [])
 
   useEffect(() => {
     if (!imagesLoaded) return
+    const t = setInterval(() => setCurrentIndex(i => (i + 1) % images.length), 4000)
+    return () => clearInterval(t)
+  }, [imagesLoaded])
 
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, 4000)
-
-    return () => clearInterval(timer)
-  }, [imagesLoaded])  
-  
   return (
-    <section id="about" className="py-24 px-6 relative overflow-hidden transition-colors duration-300">
+    <section
+      id="about"
+      className="py-24 px-6 bg-white dark:bg-[#111] border-t-3 border-black font-mono"
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: -30,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-            }}
-            className="relative"
-          >
-            <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden shadow-soft-lg z-10 bg-gray-100 dark:bg-gray-800">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border-3 border-black shadow-[6px_6px_0_#000]">
+
+          {/* ── Left: Image block ── */}
+          <div className="relative border-b-3 lg:border-b-0 lg:border-r-3 border-black">
+
+            {/* Slideshow */}
+            <div className="relative aspect-4/3 w-full overflow-hidden bg-gray-200 dark:bg-[#222]">
               {!imagesLoaded ? (
-                <div className="absolute inset-0 w-full h-full bg-gray-200 animate-pulse" />
+                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,#e5e5e5_0,#e5e5e5_4px,#f5f5f5_4px,#f5f5f5_16px)] animate-pulse" />
               ) : (
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={currentIndex}
-                    src={images[currentIndex]}
-                    alt={`About me ${currentIndex + 1}`}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
-                  />
-                </AnimatePresence>
+                <img
+                  key={currentIndex}
+                  src={images[currentIndex]}
+                  alt={`About me ${currentIndex + 1}`}
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                />
               )}
 
-              {/* Dots Indicator */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                {images.map((_, idx) => (
+              {/* Counter badge */}
+              <span className="absolute top-4 left-4 bg-black text-white text-[10px] font-black px-2 py-1 uppercase tracking-widest z-10">
+                {String(currentIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+              </span>
+
+              {/* Dot indicators */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {images.map((_, i) => (
                   <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 rounded-full transition-all duration-300 shadow-sm ${
-                      idx === currentIndex ? 'bg-white w-6' : 'bg-white/50 w-2 hover:bg-white/80'
-                    }`}
-                    aria-label={`Go to slide ${idx + 1}`}
+                    key={i}
+                    onClick={() => setCurrentIndex(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    className={`h-2 border border-black transition-all duration-300 cursor-pointer
+                      ${i === currentIndex ? 'w-6 bg-[#FFE135]' : 'w-2 bg-white hover:bg-[#FFE135]/60'}`}
                   />
                 ))}
               </div>
             </div>
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-mint/30 rounded-full mix-blend-multiply filter blur-2xl -z-10"></div>
-            <div className="absolute -top-6 -left-6 w-48 h-48 bg-peach/30 rounded-full mix-blend-multiply filter blur-2xl -z-10"></div>
-          </motion.div>
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-            }}
-          >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark dark:text-white mb-6">
-              About Me
-            </h2>
-
-            <div className="space-y-4 text-lg text-textGray dark:text-gray-300 mb-10">
-              <p>
-                Through various hands-on academic projects, I have developed a strong fundamentals in programming logic and data processing. I thrive on turning complex challenges into clean, efficient, and user-friendly technological solutions. I am currently looking for an internship opportunity where I can bring my technical expertise to a professional team and solve real-industry problems.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mb-12">
-              {stats.map((stat, index) => (
+            {/* Stats grid pinned below image */}
+            <div className="grid grid-cols-2 border-t-3 border-black">
+              {stats.map((stat, i) => (
                 <div
-                  key={index}
-                  className={`p-4 rounded-2xl ${stat.color} text-center`}
+                  key={i}
+                  className={`px-6 py-5 ${i % 2 === 0 ? 'border-r-3 border-black' : ''} ${i < 2 ? 'border-b-3 border-black' : ''}`}
                 >
-                  <div className="text-2xl md:text-3xl font-serif font-bold text-textDark dark:text-white mb-1">
+                  <p className="text-2xl font-black text-black dark:text-white leading-none">
                     {stat.value}
-                  </div>
-                  <div className="text-xs md:text-sm text-textGray dark:text-gray-300 font-medium">
+                  </p>
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mt-1">
                     {stat.label}
-                  </div>
+                  </p>
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="space-y-6">
-              {skills.map((skillGroup) => (
-                <div key={skillGroup.category}>
-                  <h3 className="text-sm font-bold text-textDark dark:text-white uppercase tracking-wider mb-3">
-                    {skillGroup.category}
-                  </h3>
+          {/* ── Right: Content block ── */}
+          <div className="flex flex-col bg-[#FFF9F0] dark:bg-[#1a1a1a]">
+
+            {/* Header */}
+            <div className="px-8 pt-8 pb-6 border-b-3 border-black">
+              <span className="inline-block border-2 text-black border-black bg-[#FFE135] px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-[2px_2px_0_#000] mb-4">
+                Who am I
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.05] text-black dark:text-white">
+                About<br />
+                <span className="inline-block bg-[#FF3F3F] text-white px-2 -rotate-1">
+                  Me.
+                </span>
+              </h2>
+            </div>
+
+            {/* Bio */}
+            <div className="px-8 py-6 border-b-3 border-black">
+              <p className="font-sans text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                Through various hands-on academic projects, I have developed strong fundamentals in programming logic and data processing. I thrive on turning complex challenges into clean, efficient, and user-friendly solutions. Currently looking for an{' '}
+                <strong className="text-black dark:text-white font-black">internship opportunity</strong>{' '}
+                where I can bring my technical expertise to a professional team and solve real-industry problems.
+              </p>
+            </div>
+
+            {/* Skills */}
+            <div className="px-8 py-6 flex flex-col gap-6 flex-1">
+              {skills.map((group, gi) => (
+                <div key={group.category}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className={`inline-block w-3 h-3 border-2 border-black ${SKILL_COLORS[gi % SKILL_COLORS.length]}`} />
+                    <h3 className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
+                      {group.category}
+                    </h3>
+                  </div>
                   <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill) => (
+                    {group.items.map(skill => (
                       <span
                         key={skill}
-                        className="px-4 py-2 bg-white dark:bg-gray-800 shadow-sm rounded-full text-sm font-medium text-textGray dark:text-gray-300 border border-gray-100 dark:border-gray-700"
+                        className="border-2 border-black bg-white dark:bg-[#222] text-black dark:text-white text-[11px] font-black uppercase px-3 py-1 shadow-[1px_1px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[2px_2px_0_#000] transition-all cursor-default"
                       >
                         {skill}
                       </span>
@@ -161,7 +147,15 @@ export default function About() {
                 </div>
               ))}
             </div>
-          </motion.div>
+
+            {/* Footer strip */}
+            <div className="border-t-3 border-black px-8 py-4 bg-black">
+              <p className="text-[11px] font-black uppercase tracking-widest text-[#FFE135]">
+                Open to internship · Based in Bandung, ID
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

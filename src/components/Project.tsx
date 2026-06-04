@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { projects, type ProjectsItem } from '../utils/Projects.tsx'
 import ProjectModal from './ProjectModal'
+
+const ACCENT_COLORS = [
+  'bg-[#FFE135]',
+  'bg-[#FF3F3F] text-white',
+  'bg-[#E8F5FF]',
+  'bg-[#F0FFE8]',
+  'bg-[#F5E8FF]',
+  'bg-[#FFF0E8]',
+]
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<ProjectsItem | null>(null)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 768
+  )
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [])
 
   const limit = isMobile ? 3 : 6
@@ -19,108 +29,108 @@ export default function Projects() {
 
   return (
     <>
-      <section id="projects" className="py-24 px-6 bg-white dark:bg-gray-900 relative transition-colors duration-300">
+      <section
+        id="projects"
+        className="py-24 px-6 bg-[#FFF9F0] dark:bg-[#1a1a1a] border-t-3 border-black font-mono"
+      >
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 text-center md:text-left"
-          >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-textDark dark:text-white mb-4">
-              Selected Work
-            </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl">
-              A collection of my recent projects, ranging from web applications to
-              mobile experiences.
-            </p>
-          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {visibleProjects.map((project, index) => (
-              <motion.div
+          {/* Header */}
+          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <span className="inline-block border-2 text-black border-black bg-[#FFE135] px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-[2px_2px_0_#000] mb-4">
+                My Work
+              </span>
+              <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-[1.05] text-black dark:text-white">
+                Selected<br />
+                <span className="inline-block bg-[#FF3F3F] text-white px-2 -rotate-1">Work.</span>
+              </h2>
+            </div>
+            <p className="font-sans text-sm leading-relaxed text-gray-600 dark:text-gray-400 max-w-xs md:text-right">
+              A collection of recent projects ranging from web apps to mobile experiences.
+            </p>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-l-3 border-t-3 border-black">
+            {visibleProjects.map((project, i) => (
+              <div
                 key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-gray-200 dark:border-gray-700 flex flex-col"
+                className="border-r-3 border-b-3 border-black flex flex-col group bg-white dark:bg-[#111] hover:bg-[#FFF9F0] dark:hover:bg-[#1f1f1f] transition-colors duration-150"
               >
-                <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-700">
+                {/* Image */}
+                <div className="relative aspect-video overflow-hidden border-b-3 border-black">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-800 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  {/* Index badge */}
+                  <span className="absolute top-3 left-3 bg-black text-white text-[10px] font-black px-2 py-1 uppercase tracking-widest">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col">
+                {/* Body */}
+                <div className="p-5 flex flex-col flex-1">
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="text-left group/title"
+                    className="text-left mb-2"
                   >
-                    <h3 className="cursor-pointer text-xl font-serif font-bold text-textDark dark:text-white mb-2 group-hover/title:underline decoration-2 underline-offset-2 transition-all">
+                    <h3 className="text-lg font-black text-black dark:text-white uppercase tracking-tight hover:underline underline-offset-4 decoration-[#FF3F3F] decoration-2">
                       {project.title}
                     </h3>
                   </button>
 
-                  <p className="text-gray-700 dark:text-gray-300 mb-6 flex-1">{project.description}</p>
+                  <p className="font-sans text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1 mb-5">
+                    {project.description}
+                  </p>
 
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex flex-wrap gap-2">
-                      {project.detail.stack.slice(0,3).map((tag) => (
-                        <span
-                          key={tag.name}
-                          className="px-3 py-1 bg-background dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600"
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                      {project.detail.stack.length > 3 && (
-                        <span
-                          className="px-3 py-1 bg-background dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600"
-                        >
-                          +{project.detail.stack.length - 3} more
-                        </span>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="cursor-pointer shrink-0 ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:underline underline-offset-2 transition-colors"
-                    >
-                      View detail →
-                    </button>
+                  {/* Stack tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {project.detail.stack.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag.name}
+                        className="border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase shadow-[1px_1px_0_#000] bg-white dark:bg-[#222] text-black dark:text-white"
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                    {project.detail.stack.length > 3 && (
+                      <span className="border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase shadow-[1px_1px_0_#000] bg-[#FFE135] text-black">
+                        +{project.detail.stack.length - 3}
+                      </span>
+                    )}
                   </div>
+
+                  {/* CTA */}
+                  <button
+                    onClick={() => setSelectedProject(project)}
+                    className="self-start border-2 border-black bg-black text-white text-[11px] font-black uppercase tracking-widest px-4 py-2 shadow-[2px_2px_0_#555] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#555] active:translate-x-px active:translate-y-px active:shadow-none transition-all cursor-pointer"
+                  >
+                    View Detail →
+                  </button>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
+          {/* Show more/less */}
           {projects.length > limit && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mt-12 flex justify-center"
-            >
+            <div className="mt-0 border-l-3 border-r-3 border-b-3 border-black flex justify-center py-6 bg-white dark:bg-[#111]">
               <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="cursor-pointer px-8 py-3 bg-lavender text-textDark dark:text-white font-medium rounded-full hover:bg-lavender/90 transition-all hover:shadow-soft-lg hover:underline"
+                onClick={() => setIsExpanded(e => !e)}
+                className="border-3 border-black bg-[#FFE135] text-black font-black text-xs uppercase tracking-widest px-8 py-3 shadow-[4px_4px_0_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all cursor-pointer"
               >
-                {isExpanded ? 'Show Less' : 'Show More'}
+                {isExpanded ? '↑ Show Less' : '↓ Show More'}
               </button>
-            </motion.div>
+            </div>
           )}
         </div>
       </section>
 
       {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}
     </>
   )
