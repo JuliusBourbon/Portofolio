@@ -1,31 +1,25 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { ExternalLink, X, ArrowLeft, ArrowRight, Clock, Calendar, User } from 'lucide-react'
 import { type ProjectsItem } from '../utils/Projects.tsx'
 
 export default function ProjectModal({
   project,
   onClose,
-} : {
+}: {
   project: ProjectsItem
   onClose: () => void
 }) {
   const [activeImage, setActiveImage] = useState(0)
-
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ container: containerRef })
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') prevImage()
+      if (e.key === 'ArrowRight') nextImage()
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
   useEffect(() => {
@@ -34,175 +28,158 @@ export default function ProjectModal({
   }, [])
 
   const prevImage = () =>
-    setActiveImage((i) => (i - 1 + project.detail.gallery.length) % project.detail.gallery.length)
+    setActiveImage(i => (i - 1 + project.detail.gallery.length) % project.detail.gallery.length)
   const nextImage = () =>
-    setActiveImage((i) => (i + 1) % project.detail.gallery.length)
+    setActiveImage(i => (i + 1) % project.detail.gallery.length)
 
-  const stackByCategory = project.detail.stack.reduce<Record<string, string[]>>(
-    (acc, item) => {
-      if (!acc[item.category]) acc[item.category] = []
-      acc[item.category].push(item.name)
-      return acc
-    },
-    {}
-  )
+  const stackByCategory = project.detail.stack.reduce<Record<string, string[]>>((acc, item) => {
+    if (!acc[item.category]) acc[item.category] = []
+    acc[item.category].push(item.name)
+    return acc
+  }, {})
+
+  const meta = [
+    { icon: User, label: 'Role', value: project.detail.role },
+    { icon: Calendar, label: 'Year', value: project.detail.year },
+    { icon: Clock, label: 'Duration', value: project.detail.duration },
+  ]
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <motion.div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 font-mono">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/70"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative z-10 bg-[#FFF9F0] dark:bg-[#1a1a1a] border-3 border-black shadow-[8px_8px_0_#000] w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+
+        {/* Close */}
+        <button
           onClick={onClose}
-        />
-
-        <motion.div
-      className="relative z-10 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 40, scale: 0.97 }}
-          transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+          aria-label="Close"
+          className="absolute top-4 right-4 z-30 p-1.5 border-2 border-black bg-[#FF3F3F] text-white shadow-[2px_2px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#000] active:translate-x-px active:translate-y-px transition-all cursor-pointer"
         >
-          <button
-            onClick={onClose}
-        className="absolute top-5 right-5 z-30 p-2 bg-white/90 dark:bg-gray-700/90 backdrop-blur rounded-full shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            aria-label="Close"
-          >
-          <X size={20} className="text-gray-600 dark:text-gray-300" />
-          </button>
+          <X size={16} />
+        </button>
 
-        {/* Scrollable Area */}
-        <div 
+        {/* Scrollable body */}
+        <div
           ref={containerRef}
-          className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-200 [&::-webkit-scrollbar-thumb]:bg-black"
         >
-        <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden rounded-t-3xl">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={activeImage}
-                src={project.detail.gallery[activeImage]}
-                alt={`${project.title} screenshot ${activeImage + 1}`}
-                className="w-full h-full object-cover"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              />
-            </AnimatePresence>
+          {/* Gallery */}
+          <div className="relative aspect-video bg-black overflow-hidden border-b-3 border-black">
+            <img
+              key={activeImage}
+              src={project.detail.gallery[activeImage]}
+              alt={`${project.title} screenshot ${activeImage + 1}`}
+              className="w-full h-full object-cover"
+            />
 
             {project.detail.gallery.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur rounded-full shadow hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2 border-2 border-black bg-white text-black shadow-[2px_2px_0_#000] hover:bg-[#FFE135] transition-colors cursor-pointer"
                 >
-                <ArrowLeft size={18} className="text-gray-700 dark:text-gray-300" />
+                  <ArrowLeft size={16} />
                 </button>
                 <button
                   onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur rounded-full shadow hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 border-2 border-black bg-white text-black shadow-[2px_2px_0_#000] hover:bg-[#FFE135] transition-colors cursor-pointer"
                 >
-                <ArrowRight size={18} className="text-gray-700 dark:text-gray-300" />
+                  <ArrowRight size={16} />
                 </button>
 
+                {/* Dot indicators */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                   {project.detail.gallery.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveImage(i)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        i === activeImage
-                          ? 'bg-white w-5'
-                          : 'bg-white/50 hover:bg-white/80'
-                      }`}
+                      className={`h-2 border border-black transition-all duration-200 cursor-pointer
+                        ${i === activeImage ? 'w-6 bg-[#FFE135]' : 'w-2 bg-white hover:bg-[#FFE135]/60'}`}
                     />
                   ))}
                 </div>
               </>
             )}
+
+            {/* Image counter */}
+            <span className="absolute top-4 left-4 bg-black text-white text-[10px] font-black px-2 py-1 uppercase tracking-widest">
+              {activeImage + 1} / {project.detail.gallery.length}
+            </span>
           </div>
 
           <div className="p-8 md:p-10">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
-              <div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-textDark dark:text-white">
-                  {project.title}
-                </h2>
-              </div>
-
-              <div className="flex gap-3 shrink-0">
-                {project.detail.githubUrl != '#' && (
+            {/* Title + links */}
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8 pb-6 border-b-3 border-black">
+              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-black dark:text-white leading-tight">
+                {project.title}
+              </h2>
+              <div className="flex gap-2 shrink-0">
+                {project.detail.githubUrl !== '#' && (
                   <a
                     href={project.detail.githubUrl}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 border-2 border-black bg-white dark:bg-[#222] text-black dark:text-white text-[11px] font-black uppercase px-4 py-2 shadow-[2px_2px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#000] transition-all"
                   >
-                    <ExternalLink size={20} />
-                    GitHub Link
+                    <ExternalLink size={13} /> GitHub
                   </a>
                 )}
-                {project.detail.liveUrl != '#' && (
+                {project.detail.liveUrl !== '#' && (
                   <a
                     href={project.detail.liveUrl}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 border-2 border-black bg-[#FF3F3F] text-white text-[11px] font-black uppercase px-4 py-2 shadow-[2px_2px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#000] transition-all"
                   >
-                    <ExternalLink size={16} />
-                    Live Demo
+                    <ExternalLink size={13} /> Live Demo
                   </a>
                 )}
               </div>
             </div>
 
-          <div className="grid grid-cols-3 gap-4 p-5 bg-background dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-700 mb-8">
-              <div className="flex items-center gap-2">
-              <User size={16} className="text-gray-700 dark:text-gray-400 shrink-0" />
-                <div>
-                <p className="text-xs text-gray-700 dark:text-gray-400">Role</p>
-                <p className="text-sm font-medium text-textDark dark:text-gray-200 leading-tight">{project.detail.role}</p>
+            {/* Meta bar */}
+            <div className="grid grid-cols-3 border-2 border-black mb-8 bg-white dark:bg-[#111]">
+              {meta.map(({ icon: Icon, label, value }, i) => (
+                <div
+                  key={label}
+                  className={`flex items-center gap-3 px-5 py-4 ${i < meta.length - 1 ? 'border-r-2 border-black' : ''}`}
+                >
+                  <Icon size={16} className="text-[#FF3F3F] shrink-0" />
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">{label}</p>
+                    <p className="text-sm font-black text-black dark:text-white leading-tight">{value}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-              <Calendar size={16} className="text-gray-700 dark:text-gray-400 shrink-0" />
-                <div>
-                <p className="text-xs text-gray-700 dark:text-gray-400">Year</p>
-                <p className="text-sm font-medium text-textDark dark:text-gray-200">{project.detail.year}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-              <Clock size={16} className="text-gray-700 dark:text-gray-400 shrink-0" />
-                <div>
-                <p className="text-xs text-gray-700 dark:text-gray-400">Duration</p>
-                <p className="text-sm font-medium text-textDark dark:text-gray-200">{project.detail.duration}</p>
-                </div>
-              </div>
+              ))}
             </div>
 
+            {/* Content */}
             <div className="grid md:grid-cols-5 gap-8">
               <div className="md:col-span-3 space-y-8">
                 <div>
-                <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-widest mb-3">
+                  <h3 className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white border-l-4 border-[#FF3F3F] pl-3 mb-3">
                     Overview
                   </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  <p className="font-sans text-sm leading-relaxed text-gray-700 dark:text-gray-300">
                     {project.detail.overview}
                   </p>
                 </div>
 
                 <div>
-                <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-widest mb-4">
+                  <h3 className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white border-l-4 border-[#FF3F3F] pl-3 mb-4">
                     Key Highlights
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2">
                     {project.detail.highlights.map((h, i) => (
-                    <li key={i} className="flex text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-textDark dark:bg-gray-300 shrink-0" />
-                        • {h}
+                      <li key={i} className="flex items-start gap-3 font-sans text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <span className="mt-1.5 w-2 h-2 border-2 border-black bg-[#FFE135] shrink-0" />
+                        {h}
                       </li>
                     ))}
                   </ul>
@@ -210,17 +187,18 @@ export default function ProjectModal({
               </div>
 
               <div className="md:col-span-2">
-              <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-widest mb-4">
+                <h3 className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white border-l-4 border-[#FF3F3F] pl-3 mb-4">
                   Tech Stack
                 </h3>
-                <div className="flex gap-4 flex-wrap">
+                <div className="flex flex-col gap-4">
                   {Object.entries(stackByCategory).map(([category, names]) => (
                     <div key={category}>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">{category}</p>
                       <div className="flex flex-wrap gap-2">
-                        {names.map((name) => (
+                        {names.map(name => (
                           <span
                             key={name}
-                          className="px-3 py-1.5 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-textDark dark:text-gray-200 text-xs font-medium rounded-lg shadow-sm"
+                            className="border-2 border-black bg-white dark:bg-[#222] text-black dark:text-white text-[11px] font-black uppercase px-3 py-1 shadow-[1px_1px_0_#000]"
                           >
                             {name}
                           </span>
@@ -233,16 +211,7 @@ export default function ProjectModal({
             </div>
           </div>
         </div>
-
-        {/* Custom Scrollbar */}
-        <div className="absolute right-2 top-20 bottom-6 w-1.5 bg-gray-300 rounded-full z-20 pointer-events-none overflow-hidden">
-          <motion.div
-          className="w-full bg-gray-500 dark:bg-gray-600 rounded-full origin-top"
-            style={{ scaleY, height: '100%' }}
-          />
-        </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+    </div>
   )
 }

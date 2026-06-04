@@ -1,125 +1,110 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Sun, Moon } from 'lucide-react'
+
+const NAV_LINKS = [
+  { name: 'Projects', href: '#projects' },
+  { name: 'About', href: '#about' },
+  { name: 'Contact', href: '#contact' },
+]
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  })
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  )
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
+    document.documentElement.classList.toggle('dark', isDarkMode)
   }, [isDarkMode])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setIsScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
-  const navLinks = [
-    {
-      name: 'Projects',
-      href: '#projects',
-    },
-    {
-      name: 'About',
-      href: '#about',
-    },
-    {
-      name: 'Contact',
-      href: '#contact',
-    },
-  ]
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-    if (!isDarkMode) {
-      localStorage.theme = 'dark'
-    } else {
-      localStorage.theme = 'light'
-    }
+    const next = !isDarkMode
+    setIsDarkMode(next)
+    localStorage.theme = next ? 'dark' : 'light'
   }
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}
+      className={`fixed top-0 left-0 right-0 z-50 font-mono transition-all duration-150 border-b-3 border-black
+        ${isScrolled
+          ? 'bg-[#FFF9F0] dark:bg-[#1a1a1a] shadow-[0_3px_0_#000]'
+          : 'bg-[#FFF9F0] dark:bg-[#1a1a1a]'
+        }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a
-          href="#"
-          className="text-2xl font-serif font-bold text-textDark dark:text-white tracking-tight"
-        >
-          Portfolio<span className="text-lavender"></span>
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2 group">
+          <span className="inline-block bg-[#FF3F3F] text-white border-2 border-black px-2 py-0.5 text-sm font-black shadow-[2px_2px_0_#000] group-hover:-translate-x-px group-hover:-translate-y-px group-hover:shadow-[3px_3px_0_#000] transition-all">
+            JULIUS WORKSPACE
+          </span>
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+        <nav className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map(link => (
             <a
               key={link.name}
               href={link.href}
-              className="text-textGray dark:text-gray-300 hover:text-textDark dark:hover:text-white transition-colors font-medium"
+              className="px-4 py-2 text-xs font-black uppercase tracking-widest text-black dark:text-white border-2 border-transparent hover:border-black hover:bg-[#FFE135] dark:hover:bg-[#FFE135] dark:hover:text-black hover:shadow-[2px_2px_0_#000] transition-all"
             >
               {link.name}
             </a>
           ))}
-          <button onClick={toggleTheme} className="p-2 cursor-pointer text-textGray dark:text-gray-300 hover:text-textDark dark:hover:text-white transition-colors" aria-label="Toggle Theme">
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="ml-3 p-2 border-2 border-black bg-white dark:bg-[#2a2a2a] text-black dark:text-white shadow-[2px_2px_0_#000] hover:-translate-x-px hover:-translate-y-px hover:shadow-[3px_3px_0_#000] active:translate-x-px active:translate-y-px active:shadow-[1px_1px_0_#000] transition-all cursor-pointer"
+          >
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </nav>
 
-        {/* Mobile Toggle */}
+        {/* Mobile controls */}
         <div className="flex items-center gap-2 md:hidden">
-          <button onClick={toggleTheme} className="p-2 text-textDark dark:text-white transition-colors" aria-label="Toggle Theme">
-            {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="p-2 border-2 border-black bg-white dark:bg-[#2a2a2a] text-black dark:text-white shadow-[2px_2px_0_#000] transition-all cursor-pointer"
+          >
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <button
-            className="p-2 text-textDark dark:text-white"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen(o => !o)}
+            aria-label="Toggle menu"
+            className="p-2 border-2 border-black bg-[#FFE135] text-black shadow-[2px_2px_0_#000] transition-all cursor-pointer"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.nav
-            initial={{
-              opacity: 0,
-              y: -20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              y: -20,
-            }}
-          className="absolute top-full left-0 right-0 bg-white dark:bg-gray-900 shadow-soft-lg py-4 px-6 flex flex-col gap-4 md:hidden"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-              className="text-textGray dark:text-gray-300 hover:text-textDark dark:hover:text-white font-medium py-2"
-              >
-                {link.name}
-              </a>
-            ))}
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <nav className="border-t-3 border-black bg-[#FFF9F0] dark:bg-[#1a1a1a] flex flex-col md:hidden">
+          {NAV_LINKS.map((link, i) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`px-6 py-4 text-xs font-black uppercase tracking-widest text-black dark:text-white hover:bg-[#FFE135] dark:hover:bg-[#FFE135] dark:hover:text-black transition-colors
+                ${i < NAV_LINKS.length - 1 ? 'border-b-2 border-black' : ''}`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
+      )}
     </header>
   )
 }

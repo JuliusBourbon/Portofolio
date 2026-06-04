@@ -1,8 +1,32 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 71px;
+}
+
 .windsong-regular {
   font-family: "WindSong", cursive;
   font-weight: 400;
   font-style: normal;
+}
+
+@theme {
+  --animate-marquee: marquee 20s linear infinite;
+  --border-width-3: 3px;
+
+  --keyframes-marquee-0: translateX(0%);
+  --keyframes-marquee-100: translateX(-50%);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }

@@ -38,6 +38,12 @@ const academic_3 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v177757651
 const academic_4 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_4_tfdl2c.png'
 const academic_5 = 'https://res.cloudinary.com/dnn3mm02t/image/upload/v1777576514/academic_5_grt3bf.png'
 
+// ChlorisGarden Image
+const chloris_1 = "https://res.cloudinary.com/dnn3mm02t/image/upload/v1780613611/Screenshot_2026-06-05_055143_pvfpla.png"
+const chloris_2 = "https://res.cloudinary.com/dnn3mm02t/image/upload/v1780613610/Screenshot_2026-06-05_055203_femyi1.png"
+const chloris_3 = "https://res.cloudinary.com/dnn3mm02t/image/upload/v1780613610/Screenshot_2026-06-02_213226_til6nd.png"
+const chloris_4 = "https://res.cloudinary.com/dnn3mm02t/image/upload/v1780613611/Screenshot_2026-06-05_055211_s8i1dz.png"
+
 export interface ProjectsItem {
   id: number;
   title: string;
@@ -56,8 +62,50 @@ export interface ProjectsItem {
     stack: { name: string, category: string }[];
   };
 }
- 
+
 export const projects: ProjectsItem[] = [
+  {
+    id: 8,
+    title: 'Chloris Garden',
+    description: 'AI-powered tomato plant disease detection system',
+    image: chloris_1,
+    detail: {
+      overview:
+        'ChlorisGarden is a web-based application that leverages deep learning to detect diseases in tomato plants through leaf image analysis. Users can upload a photo of a tomato leaf and receive an instant diagnosis along with treatment recommendations. Built as a Capstone Project for Coding Camp 2026 by DBS Bank (Team CC26-PSU175).',
+      role: 'Fullstack Developer',
+      year: '2026',
+      duration: '3 months',
+      liveUrl: 'chloris-garden.vercel.app',
+      githubUrl: 'https://github.com/ChlorisGarden/ChlorisGarden',
+      highlights: [
+        'Built a RESTful API with Node.js and Express to handle user authentication, image uploads, and scan history retrieval.',
+        'Developed a machine learning service using FastAPI and TensorFlow/Keras to classify tomato leaf diseases with confidence scoring.',
+        'Integrated AWS S3 for image storage and Supabase (PostgreSQL) as the primary database.',
+        'Implemented JWT-based authentication with email-based password reset via SMTP.',
+        'Built a React + Vite frontend with an interactive dashboard displaying scan statistics and disease encyclopedia.',
+      ],
+      gallery: [
+        chloris_1,
+        chloris_2,
+        chloris_3,
+        chloris_4,
+      ],
+      stack: [
+        { name: 'React', category: 'Frontend' },
+        { name: 'Vite', category: 'Frontend' },
+        { name: 'Tailwind CSS', category: 'Frontend' },
+        { name: 'Node.js', category: 'Backend' },
+        { name: 'Express', category: 'Backend' },
+        { name: 'JWT', category: 'Backend' },
+        { name: 'PostgreSQL', category: 'Backend' },
+        { name: 'Neon', category: 'Backend' },
+        { name: 'AWS S3', category: 'Backend' },
+        { name: 'FastAPI', category: 'ML Service' },
+        { name: 'TensorFlow', category: 'ML Service' },
+        { name: 'Python', category: 'ML Service' },
+      ],
+    },
+  },
   {
     id: 1,
     title: 'Seism',
@@ -259,4 +307,5 @@ export const projects: ProjectsItem[] = [
       ],
     },
   },
+
 ]
