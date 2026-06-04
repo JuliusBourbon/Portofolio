@@ -2,15 +2,6 @@ import { useState, useEffect } from 'react'
 import { projects, type ProjectsItem } from '../utils/Projects.tsx'
 import ProjectModal from './ProjectModal'
 
-const ACCENT_COLORS = [
-  'bg-[#FFE135]',
-  'bg-[#FF3F3F] text-white',
-  'bg-[#E8F5FF]',
-  'bg-[#F0FFE8]',
-  'bg-[#F5E8FF]',
-  'bg-[#FFF0E8]',
-]
-
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<ProjectsItem | null>(null)
   const [isExpanded, setIsExpanded] = useState(false)
