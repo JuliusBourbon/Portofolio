@@ -41,14 +41,12 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
-        {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <span className="inline-block bg-[#FF3F3F] text-white border-2 border-black px-2 py-0.5 text-sm font-black shadow-[2px_2px_0_#000] group-hover:-translate-x-px group-hover:-translate-y-px group-hover:shadow-[3px_3px_0_#000] transition-all">
             JULIUS WORKSPACE
           </span>
         </a>
 
-        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map(link => (
             <a
@@ -60,7 +58,6 @@ export default function Navbar() {
             </a>
           ))}
 
-          {/* Theme toggle */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -70,7 +67,6 @@ export default function Navbar() {
           </button>
         </nav>
 
-        {/* Mobile controls */}
         <div className="flex items-center gap-2 md:hidden">
           <button
             onClick={toggleTheme}
@@ -89,7 +85,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <nav className="border-t-3 border-black bg-[#FFF9F0] dark:bg-[#1a1a1a] flex flex-col md:hidden">
           {NAV_LINKS.map((link, i) => (

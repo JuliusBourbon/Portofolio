@@ -88,7 +88,7 @@ export default function Hero() {
               />
             </div>
             <div className="absolute -bottom-4 -right-4 border-3 border-black bg-[#FF3F3F] px-3 py-1.5 text-[11px] font-black uppercase tracking-widest text-white z-10">
-              Informatics '2X
+              Fullstack Developer
             </div>
           </div>
         </div>

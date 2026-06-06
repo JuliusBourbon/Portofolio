@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { Send } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '../utils/Icons'
+import { Mail, Send } from 'lucide-react'
+import { GithubIcon, LinkedinIcon, TwitterIcon, } from '../utils/Icons'
 import toast from 'react-hot-toast'
 
 const SOCIAL_LINKS = [
   { icon: <GithubIcon size={18} />, href: 'https://github.com/JuliusBourbon', label: 'GitHub' },
   { icon: <LinkedinIcon size={18} />, href: 'https://linkedin.com/in/naherr', label: 'LinkedIn' },
   { icon: <TwitterIcon size={18} />, href: 'https://twitter.com/juliusbourbonn', label: 'Twitter' },
+  { icon: <Mail size={18} />, href: 'naherrrrr@gmail.com', label: 'Email' },
 ]
 
 const FORM_ENDPOINT = 'https://formspree.io/f/xpqknpzd'
@@ -56,7 +57,6 @@ export default function Contact() {
     >
       <div className="max-w-3xl mx-auto">
 
-        {/* Header */}
         <div className="mb-12">
           <span className="inline-block border-2 text-black border-black bg-[#FFE135] px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-[2px_2px_0_#000] mb-4">
             Get in Touch
@@ -72,10 +72,8 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Form card */}
         <div className="border-3 border-black bg-white dark:bg-[#111] shadow-[6px_6px_0_#000]">
 
-          {/* Card header strip */}
           <div className="border-b-3 border-black px-8 py-4 flex items-center gap-3 bg-black">
             <span className="w-3 h-3 border-2 border-[#FF3F3F] bg-[#FF3F3F]" />
             <span className="w-3 h-3 border-2 border-[#FFE135] bg-[#FFE135]" />
@@ -87,7 +85,6 @@ export default function Contact() {
 
           <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-6">
 
-            {/* Name + Email */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="name" className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
@@ -119,7 +116,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Message */}
             <div className="space-y-2">
               <label htmlFor="message" className="text-[11px] font-black uppercase tracking-widest text-black dark:text-white">
                 Message <span className="text-[#FF3F3F]">*</span>
@@ -135,7 +131,6 @@ export default function Contact() {
               />
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isSubmitting}
@@ -155,12 +150,11 @@ export default function Contact() {
           </form>
         </div>
 
-        {/* Social links */}
-        <div className="mt-0 border-l-3 border-r-3 border-b-3 border-black flex items-center justify-between px-8 py-5 bg-[#FFF9F0] dark:bg-[#1a1a1a]">
+        <div className="mt-0 border-l-3 border-r-3 border-b-3 border-black flex flex-col md:flex-row items-center justify-between px-8 py-5 bg-[#FFF9F0] dark:bg-[#1a1a1a]">
           <p className="text-[11px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
             Find me on
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-col md:flex-row">
             {SOCIAL_LINKS.map(link => (
               <a
                 key={link.label}
