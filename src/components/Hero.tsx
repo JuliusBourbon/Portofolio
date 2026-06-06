@@ -7,7 +7,7 @@ const PROFILE_IMAGE =
 const STATS = [
   { num: '3+', label: 'Years Coding' },
   { num: '15+', label: 'Projects Done' },
-  { num: '6+', label: 'Tech Stack' },
+  { num: '10+', label: 'Tech Stack' },
 ]
 
 export default function Hero() {
